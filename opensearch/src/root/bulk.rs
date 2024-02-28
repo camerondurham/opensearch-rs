@@ -250,9 +250,9 @@ impl<B> BulkCreateOperation<B> {
     where
         S: Into<String>,
     {
-        let id = match id { 
-            Some(inner) => { Some(inner.into()) }, 
-            None => None 
+        let id = match id {
+            Some(inner) => Some(inner.into()),
+            None => None,
         };
         Self {
             operation: BulkOperation {
