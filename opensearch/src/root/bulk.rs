@@ -245,6 +245,29 @@ impl<B> BulkCreateOperation<B> {
         }
     }
 
+    /// Creates a new instance of [BulkCreateOperation] where _id can be optional
+    pub fn new_optional_id<S>(id: Option<S>, source: B) -> Self
+    where
+        S: Into<String>,
+    {
+        let id = match id { 
+            Some(inner) => { Some(inner.into()) }, 
+            None => None 
+        };
+        Self {
+            operation: BulkOperation {
+                header: BulkHeader {
+                    action: BulkAction::Create,
+                    metadata: BulkMetadata {
+                        _id: id,
+                        ..Default::default()
+                    },
+                },
+                source: Some(source),
+            },
+        }
+    }
+
     /// Specify the name of the index to perform the bulk update operation against.
     ///
     /// Each bulk operation can specify an index to operate against. If all bulk operations
